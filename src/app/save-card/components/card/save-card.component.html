@@ -1,0 +1,293 @@
+<section class="cc-wrapper">
+  <div class="cc-box">
+    <div #ccBoxFlip class="cc-box--flip">
+      <div class="cc-box__front">
+        <div class="cc-box__element">
+          <div class="cc-box__logo">
+            {{ getCardType(ccNumber.value) | uppercase }}
+          </div>
+        </div>
+        <div class="cc-box__element">
+          <div
+          class="cc-form__text"
+          id="cc-card-number-display"
+          >
+            {{cardForm.controls.cardNumber.value || 'XXXXXXXXXXXXXXXX' | numberMask}}
+          </div>
+        </div>
+        <div class="cc-box__element" style="display: flex; justify-content:space-between">
+          <div>
+              <label class="cc-form__label--card" for="cc-holder-display"
+              >Card Holder</label>
+              <div
+              class="cc-form__text"
+              id="cc-holder-display"
+              >
+              {{cardForm.controls.cardHolder.value || 'FULL NAME' | uppercase}}
+              </div>
+          </div>
+
+          <div>
+            <label class="cc-form__label--card" for="cc-valid-date-display"
+            >VALID THRU</label
+          >
+          <div
+          class="cc-form__text"
+          id="cc-valid-date-display"
+          >
+          <ng-container *ngIf="cardForm.controls.expirationMonth.value && cardForm.controls.expirationYear.value">
+            {{ cardForm.controls.expirationMonth.value + '/' + cardForm.controls.expirationYear.value | validity}}
+          </ng-container>
+          <ng-container *ngIf="!cardForm.controls.expirationMonth.value && !cardForm.controls.expirationYear.value">
+            {{'XX/XX'}}
+          </ng-container>
+
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="cc-box__back">
+        <div class="cc-box__strip">&nbsp;</div>
+        <input
+          class="cc-form__input cc-form__input--cursive cc-form__input--right-align"
+          id="cc-ccv-display"
+          aria-label="CVV"
+          disabled="disabled"
+          [value]="'CVV: ' + cardForm.controls.ccv.value"
+          title="CVV"
+        />
+      </div>
+    </div>
+  </div>
+  <form class="cc-form" [formGroup]="cardForm">
+    <div class="cc-form__wrapper--long">
+      <label for="cc-number" class="cc-form__label cc-form__label--first"
+        >Card number</label
+      >
+      <input
+        #ccNumber
+        class="cc-form__input"
+        id="cc-number"
+        aria-label="Card number"
+        type="text"
+        title="Card number"
+        maxlength="19"
+        formControlName="cardNumber"
+        (focus)="ccBoxFlip.classList.remove('hover')"
+      />
+      <div
+        class="cc-form__error"
+        *ngIf="
+          validateCCNum &&
+          cardForm.controls.cardNumber.touched &&
+          cardForm.controls.cardNumber.hasError('required')
+        "
+      >
+        {{ ccNumMissingTxt }}
+      </div>
+      <div
+        class="cc-form__error"
+        *ngIf="
+          validateCCNum &&
+          cardForm.controls.cardNumber.touched &&
+          cardForm.controls.cardNumber.hasError('minlength')
+        "
+      >
+        {{ ccNumTooShortTxt }}
+      </div>
+      <div
+        class="cc-form__error"
+        *ngIf="
+          validateCCNum &&
+          cardForm.controls.cardNumber.touched &&
+          cardForm.controls.cardNumber.hasError('maxlength')
+        "
+      >
+        {{ ccNumTooLongTxt }}
+      </div>
+      <div
+        class="cc-form__error"
+        *ngIf="
+          validateCCNum &&
+          cardForm.controls.cardNumber.touched &&
+          cardForm.controls.cardNumber.hasError('numbersOnly')
+        "
+      >
+        {{ ccNumContainsLettersTxt }}
+      </div>
+    </div>
+    <div class="cc-form__wrapper--long">
+      <label for="cc-holder-name" class="cc-form__label"
+        >Card Holder name</label
+      >
+      <input
+        class="cc-form__input"
+        id="cc-holder-name"
+        aria-label="Card holder name"
+        type="text"
+        title="Card holder name"
+        maxlength="22"
+        formControlName="cardHolder"
+        (focus)="ccBoxFlip.classList.remove('hover')"
+      />
+      <div
+        class="cc-form__error"
+        *ngIf="
+          validateCardHolder &&
+          cardForm.controls.cardHolder.touched &&
+          cardForm.controls.cardHolder.hasError('required')
+        "
+      >
+        {{ cardHolderMissingTxt }}
+      </div>
+      <div
+        class="cc-form__error"
+        *ngIf="
+          validateCardHolder &&
+          cardForm.controls.cardHolder.touched &&
+          cardForm.controls.cardHolder.hasError('maxlength')
+        "
+      >
+        {{ cardHolderTooLongTxt }}
+      </div>
+    </div>
+    <div class="cc-form--inline">
+      <div class="cc-form__wrapper cc-form__wrapper--short">
+        <label for="cc-expiration-month" class="cc-form__label" style="white-space: nowrap">Expiry date</label>
+        <div style="display: flex" class="cc-form__select-block">
+            <select
+            id="cc-expiration-month"
+            class="cc-form__select"
+            aria-label="Expiration month"
+            formControlName="expirationMonth"
+            style="margin-right: 10px;"
+          >
+          <option value="" disabled selected>Month</option>
+            <option
+              *ngFor="let month of months"
+              value="{{ month }}"
+              (click)="ccBoxFlip.classList.remove('hover')"
+            >
+              {{ month }}
+            </option>
+          </select>
+          <select
+          id="cc-expiration-year"
+          class="cc-form__select"
+          aria-label="Expiration year"
+          formControlName="expirationYear"
+        >
+        <option value="" disabled selected>Year</option>
+          <option
+            *ngFor="let year of years"
+            value="{{ year }}"
+            (click)="ccBoxFlip.classList.remove('hover')"
+          >
+            {{ year }}
+          </option>
+        </select>
+        </div>
+
+      </div>
+      <div
+        class="cc-form__wrapper cc-form__wrapper--short cc-form__wrapper--last"
+      >
+        <label for="cc-ccv" class="cc-form__label">cvv</label>
+        <input
+          class="cc-form__input cc-form__input--short"
+          id="cc-ccv"
+          aria-label="CCV"
+          type="text"
+          title="CCV"
+          minlength="3"
+          maxlength="4"
+          formControlName="ccv"
+          (focus)="ccBoxFlip.classList.add('hover')"
+          (blur)="ccBoxFlip.classList.remove('hover')"
+        />
+      </div>
+    </div>
+    <div
+      class="cc-form__error"
+      *ngIf="
+        validateExpirationMonth &&
+        cardForm.controls.expirationMonth.touched &&
+        cardForm.controls.expirationMonth.hasError('required')
+      "
+    >
+      {{ expirationMonthMissingTxt }}
+    </div>
+    <div
+      class="cc-form__error"
+      *ngIf="
+        validateExpirationMonth &&
+        cardForm.controls.expirationYear.touched &&
+        cardForm.controls.expirationYear.hasError('required')
+      "
+    >
+      {{ expirationYearMissingTxt }}
+    </div>
+    <div
+      class="cc-form__error"
+      *ngIf="
+        validateCardExpiration &&
+        cardForm.controls.expirationMonth.touched &&
+        cardForm.controls.expirationYear.touched &&
+        cardForm.hasError('expiration')
+      "
+    >
+      {{ cardExpiredTxt }}
+    </div>
+    <div
+      class="cc-form__error"
+      *ngIf="
+        validateCCV &&
+        cardForm.controls.ccv.touched &&
+        cardForm.controls.ccv.hasError('required')
+      "
+    >
+      {{ ccvMissingTxt }}
+    </div>
+    <div
+      class="cc-form__error"
+      *ngIf="
+        validateCCV &&
+        cardForm.controls.ccv.touched &&
+        cardForm.controls.ccv.hasError('minlength')
+      "
+    >
+      {{ ccvNumTooShortTxt }}
+    </div>
+    <div
+      class="cc-form__error"
+      *ngIf="
+        validateCCV &&
+        cardForm.controls.ccv.touched &&
+        cardForm.controls.ccv.hasError('maxlength')
+      "
+    >
+      {{ ccvNumTooLongTxt }}
+    </div>
+    <div
+      class="cc-form__error"
+      *ngIf="
+        validateCCV &&
+        cardForm.controls.ccv.touched &&
+        cardForm.controls.ccv.hasError('numbersOnly')
+      "
+    >
+      {{ ccvContainsLettersTxt }}
+    </div>
+    <button
+      type="submit"
+      class="cc-form__button cc-form__button--ripple"
+      [class.cc-form__button--disabled]="cardForm.invalid"
+      aria-label="submit"
+      [disabled]="cardForm.invalid"
+      (click)="saveCard()"
+      (keydown.enter)="saveCard()"
+    >
+      Submit
+    </button>
+  </form>
+</section>

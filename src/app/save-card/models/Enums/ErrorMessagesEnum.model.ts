@@ -1,0 +1,15 @@
+export enum ErrorMessagesEnum {
+CARD_NUM_MISSING = "Card number is required",
+CARD_NUM_SHORT = "Card number is short",
+CARD_NUM_LONG = "Card number is long",
+CARD_NUM_NUMBER_ONLY = 'Card number can contain digits only',
+CARD_USERNAME_MISSING = 'Card holder name is required',
+CARD_USERNAME_LONG = 'Card holder name is too long',
+CARD_EXP_MONTH_MISSING = 'Expiry month is required',
+CARD_EXP_YEAR_MISSING = 'Expiry year is required',
+CARD_CCV_MISSING = 'CCV number is required',
+CARD_CCV_SHORT = 'CCV number is short',
+CARD_CCV_LONG = 'CCV number is long',
+CARD_CCV_NUMBER_ONLY = 'CCV number can contain digits only',
+CARD_EXPIRED = 'Card has expired',
+}

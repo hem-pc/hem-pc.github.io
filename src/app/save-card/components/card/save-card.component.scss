@@ -1,0 +1,426 @@
+@import '../../../stylesheets/variables/_variables';
+@import '../../../stylesheets/mixins/_mixins';
+
+.cc-form {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  width: 600px;
+  margin-top: 7em;
+  background: #fff;
+  border-radius: 15px;
+
+  @include breakpoint(mobile) {
+    width: calc(100vw - 50px);
+    margin-top: 4em;
+  }
+
+  &--inline {
+    align-items: inherit;
+    display: inherit;
+    flex-flow: row;
+    height: 100%;
+    justify-content: space-between;
+    margin-bottom: $small-margin;
+    width: 100%;
+    margin-top: 5%;
+
+
+    @include breakpoint(desktop-only) {
+      width: 75%;
+    }
+
+    @include breakpoint(laptop) {
+      width: 75%;
+    }
+
+    @include breakpoint(tablet) {
+      width: 75%;
+    }
+
+    @include breakpoint(mobile) {
+      align-items: center;
+      display: inherit;
+      flex-flow: column;
+      flex-wrap: wrap;
+      height: 100%;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  @at-root input {
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__select-block{
+    display: flex;
+
+    @include breakpoint(mobile) {
+      justify-content: space-between;
+    }
+  }
+
+  &__wrapper {
+    @include breakpoint(desktop-only) {
+      &--long {
+        width: 75%;
+      }
+
+      &--short {
+        width: 45px;
+      }
+
+      &--last {
+        width: 65px;
+      }
+    }
+
+    @include breakpoint(laptop) {
+      &--long {
+        width: 75%;
+      }
+
+      &--short {
+        width: 45px;
+      }
+
+      &--last {
+        width: 65px;
+      }
+    }
+
+    @include breakpoint(tablet) {
+      &--long {
+        width: 75%;
+      }
+
+      &--short {
+        width: 45px;
+      }
+
+      &--last {
+        width: 65px;
+      }
+    }
+
+    @include breakpoint(mobile) {
+      margin-right: 0;
+      margin-top: 0;
+
+      &--long,
+      &--short {
+        width: 75%;
+      }
+
+      &--last {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__label {
+    color: #000;
+    display: block;
+    font-size: 80%;
+    font-weight: normal;
+    letter-spacing: 1px;
+    line-height: $label-line-height;
+    margin-bottom: 5px;
+    margin-top: $small-margin;
+    text-align: left;
+    text-shadow: none;
+    text-transform: uppercase;
+    width: 100%;
+
+    &--card {
+      color: #fff;
+      font-size: 80%;
+    }
+  }
+
+  &__text {
+    font-size: 1.7em;
+    color: #fff;
+    @include breakpoint(mobile) {
+      font-size: clamp(1em, 1em ,1.22em);
+    }
+  }
+
+  &__select {
+    @extend .cc-form__input;
+    background: #fff;
+    width: 100px !important;
+  }
+
+  &__input {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    color: #333333;
+    display: block;
+    font-size: $input-font-size;
+    margin: 0;
+    padding: 8px;
+    line-height: 40px;
+    outline: none;
+    text-align: left;
+    width: -webkit-fill-available;
+    height: 100%;
+
+    &--transparent {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    &--embosed {
+      color: $card-font-colour;
+      font-size: $cc-font-size;
+      text-shadow: 0 2px 1px #0000004d;
+
+      @include breakpoint(tablet) {
+        font-size: $cc-font-size-medium;
+      }
+
+      @include breakpoint(mobile) {
+        font-size: $cc-font-size-big;
+      }
+    }
+
+    &--cursive {
+      font-size: $label-font-size-normal;
+      font-style: italic;
+      left: 0;
+      margin: 0 auto;
+    }
+
+    &--right-align {
+      text-align: right;
+      width: 96.5%;
+      height: unset;
+
+      @include breakpoint(mobile) {
+        width: 95%;
+        padding-left: 0;
+      }
+    }
+
+    &--left-align {
+      text-align: left;
+    }
+
+    &:focus {
+      border-color: $input-focus-border-colour;
+    }
+  }
+
+  &__error {
+    color: $card-font-invalid-colour;
+    font-size: 0.8em;
+  }
+
+  &__button {
+    background: $input-focus-border-colour;
+    border: 0;
+    border-radius: $small-radius;
+    color: $card-font-colour;
+    cursor: pointer;
+    margin-bottom: $small-margin;
+    margin-top: $small-padding;
+    outline: 0;
+    overflow: hidden;
+    padding: $small-padding;
+    position: relative;
+    text-align: center;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 50%;
+    padding: 10px;
+    font-size: 1em;
+
+    &--disabled {
+      background: #a7b4be;
+      pointer-events: none;
+    }
+
+    &:hover {
+      box-shadow: 0 6px 8px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    &:focus {
+      background: darken($input-focus-border-colour, 12%);
+    }
+
+    &--ripple {
+      overflow: hidden;
+      position: relative;
+
+      &:after {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 80%;
+        content: '';
+        display: block;
+        height: 120px;
+        left: 50%;
+        margin-left: -50%;
+        margin-top: -60px;
+        position: absolute;
+        top: 50%;
+        transform: scale(0);
+        width: 100%;
+      }
+
+      &:not(:active):after {
+        animation: button-ripple 2s ease-out;
+      }
+    }
+
+    @keyframes button-ripple {
+      0% {
+        transform: scale(0);
+      }
+      20% {
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.cc-wrapper {
+  border-radius: $wrapper-radius;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.cc-box {
+  height: $card-height;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  transform: translateY(-100%);
+  width: $card-width;
+  z-index: 1;
+
+  @include breakpoint(tablet) {
+    transform: translateY(-115%);
+  }
+
+  @include breakpoint(mobile) {
+    transform: translateY(-60%);
+  }
+
+  &--flip {
+    transform-style: preserve-3d;
+    transition: $transition-time;
+
+    &:hover,
+    &.hover {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &__element {
+    padding: 0;
+    width: 80%;
+    position: relative;
+  }
+
+  &__logo {
+    align-items: center;
+    color: $card-font-colour;
+    display: flex;
+    flex-flow: row nowrap;
+    font-size: 1.5em;
+    font-style: italic;
+    font-weight: bold;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  &__strip {
+    background: linear-gradient(135deg, #404040, #1a1a1a);
+    font-size: $strip-font-size;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    transform: translateY(-90%);
+    width: 100%;
+  }
+
+  &__front,
+  &__back {
+    align-items: center;
+    backface-visibility: hidden;
+    background: url('https://wallpapersflix.com/wp-content/uploads/2021/06/Abstract-Wallpaper-Background.jpg');
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-flow: column nowrap;
+    height: 250px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: calc(100% - 40px);
+    padding: 20px;
+    max-width: 600px;
+
+    @include breakpoint(mobile) {
+      height: 160px;
+    }
+  }
+
+  &__front {
+    transform: rotateY(0deg);
+    justify-content: space-around;
+  }
+
+  &__back {
+    transform: rotateY(180deg);
+    justify-content: center;
+    padding: 20px 0;
+    width: 100%;
+  }
+}
+
+.ng-invalid {
+  &.ng-touched {
+    border-color: $card-font-invalid-colour;
+  }
+}
+
+.ng-valid {
+  &.ng-touched {
+    border-color: $input-border-color;
+  }
+}
+
+::ng-deep .snackbar_wrapper {
+  background: #1dee89;
+  max-width: 100px !important;
+  min-width: 100px !important;
+
+  @include breakpoint(mobile) {
+    position: absolute !important;
+    right: 0 !important;
+  }
+}

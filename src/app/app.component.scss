@@ -1,0 +1,16 @@
+.app-wrapper {
+  align-items: center;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  background: #afa1c5;
+
+  &__lazy-route {
+    margin-top: 10%;
+  }
+}
